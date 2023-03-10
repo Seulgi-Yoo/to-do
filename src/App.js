@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import styled from "styled-components";
+import Header from "./component/Header";
+import List from "./component/List";
+import Controller from "./component/Controller";
+import { useState } from "react";
 
+const Main = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  `;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 800px;
+  overflow: hidden;
+  box-shadow: 10px 10px 100px #ccc;
+`;
 function App() {
+  const [toDoList, setToDoList] = useState([]); // 투두 리스트
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Main>
+      <Container>
+        <Header />
+        <List toDoList={toDoList} setToDoList={setToDoList} />
+        <Controller toDoList={toDoList} setToDoList={setToDoList} />
+      </Container>
+    </Main>
   );
 }
 
