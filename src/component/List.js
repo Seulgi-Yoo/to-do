@@ -1,8 +1,31 @@
 import styled, { keyframes, css } from "styled-components";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import Modal from "react-modal";
+Modal.setAppElement('#root')
+
+// 모달 스타일
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+  overlay: {
+    position: "fixed",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: "rgba(255, 255, 255, 0.2)",
+		zIndex: 10,
+  }
+};
 
 // Hello 컴포넌트 나타나는 애니메이션
 const fadeIn = keyframes`
@@ -20,12 +43,17 @@ const Hello = styled.div`
   font-size: 50px;
   text-align: center;
   position: relative;
-  top: 100px;
+  margin-top: 100px;
   color: #6b7dff;
   overflow-wrap: break-word;
-  animation: ${props => props.show ? css`${fadeIn} 0.5s ease-out` : 'none'};
-  opacity: ${props => props.show ? 1 : 0};
-  transform: ${props => props.show ? 'translateY(0)' : 'translateY(-10px)'};
+  animation: ${(props) =>
+    props.show
+      ? css`
+          ${fadeIn} 0.5s ease-out
+        `
+      : "none"};
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  transform: ${(props) => (props.show ? "translateY(0)" : "translateY(-10px)")};
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 `;
 
@@ -107,6 +135,9 @@ const ListItem = styled.li`
 
 export default function List({ toDoList, setToDoList }) {
   const [checkedItems, setCheckedItems] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalItemId, setModalItemId] = useState(null);
+  const inputRef = useRef(null);
 
   const handleCheck = (e, itemId) => {
     const isChecked = e.target.checked;
@@ -117,11 +148,34 @@ export default function List({ toDoList, setToDoList }) {
     }
   };
 
-  const handleClick = (itemId) => {
+  const handleDelete = (itemId) => {
     const updatedList = toDoList.filter((item) => item.id !== itemId);
     setToDoList(updatedList);
     localStorage.setItem("toDoList", JSON.stringify(updatedList));
   };
+
+  const openModal = (itemId) => {
+    setShowModal(true);
+    setModalItemId(itemId);
+    console.log(itemId);
+  };
+
+  const closeModal = (value) => {
+    setShowModal(false);
+    const findIdx = toDoList.findIndex((item) => item.id === modalItemId);
+    if (value !== '') {
+      toDoList[findIdx].todo = value;
+      const updatedList = [...toDoList];
+      setToDoList(updatedList);
+      localStorage.setItem("toDoList", JSON.stringify(updatedList));
+    }
+  };
+
+  const onKeyDownEnter = (e, value) => {
+    if (e.key === "Enter") {
+      closeModal(value)
+    }
+  }
 
   const text = [
     "You are special!",
@@ -155,15 +209,29 @@ export default function List({ toDoList, setToDoList }) {
                 checked={checkedItems.includes(item.id)}
                 onChange={(e) => handleCheck(e, item.id)}
               />
-              <span className={checkedItems.includes(item.id) ? "checked" : ""}>
+              <span
+                onClick={() => openModal(item.id)}
+                className={checkedItems.includes(item.id) ? "checked" : ""}
+              >
                 {item.todo}
               </span>
               <div>
                 <span className="date">{item.createDate}</span>
-                <div className="delete" onClick={() => handleClick(item.id)}>
+                <div className="delete" onClick={() => handleDelete(item.id)}>
                   <FontAwesomeIcon icon={faTrashCan} />
                 </div>
               </div>
+              <Modal
+                isOpen={showModal}
+                onRequestClose={() => setShowModal(false)}
+                style={customStyles}
+              >
+                <h2>수정하기</h2>
+                <input required type="text" ref={inputRef} onKeyDown={(e) => onKeyDownEnter(e, inputRef.current.value)} />
+                <button onClick={() => closeModal(inputRef.current.value)}>
+                  저장
+                </button>
+              </Modal>
             </ListItem>
           ))}
         </ul>
