@@ -17,9 +17,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 500px;
-  height: 800px;
+  height: 100vh;
   overflow: hidden;
   box-shadow: 10px 10px 100px #ccc;
+  @media screen and (max-width: 500px) {
+   width: 100vw;
+  }
 `;
 function App() {
   const [toDoList, setToDoList] = useState([]); // 투두 리스트

@@ -7,7 +7,7 @@ const DateContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  max-width: 500px;
   height: 100px;
   background: #ffffff;
   border-bottom: 0.5px solid #c1c7ff;
@@ -36,6 +36,9 @@ const WeatherIcon = styled.div`
   position: absolute;
   right: 20px;
   font-size: 40px;
+  @media screen and (max-width:500px) {
+    display: none;
+  }
 `;
 
 function formatWeekday(date) {

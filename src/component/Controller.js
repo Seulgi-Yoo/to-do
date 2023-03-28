@@ -10,6 +10,10 @@ const Container = styled.div`
   left: 0;
   bottom: 0;
   border-top: 0.5px solid #C1C7FF;
+  background-color: #fff;
+  @media screen and (max-width:500px) {
+    max-width: 100vw;
+  }
 `;
 
 const AddNewContainer = styled.div`
@@ -65,20 +69,6 @@ export default function Controller({ toDoList, setToDoList }) {
       AddTaskInputRef.current.focus();
     }
   }, [isAddingTask])
-
-  // function formatDate(date) {
-  //   const diff = Math.floor((new Date() - date) / 1000); // 초 단위 차이 계산
-  //   if (diff < 60) { // 1분 미만일 경우
-  //     return '방금 전';
-  //   } else if (diff < 3600) { // 1시간 미만일 경우
-  //     const minutes = Math.floor(diff / 60);
-  //     return `${minutes}분 전`;
-  //   } else { // 1시간 이상일 경우
-  //     const hours = date.getHours();
-  //     const minutes = date.getMinutes();
-  //     return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
-  //   }
-  // };
 
   useEffect(() => {
     const storedToDoList = JSON.parse(localStorage.getItem("toDoList"));
