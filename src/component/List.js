@@ -43,7 +43,7 @@ const Hello = styled.div`
   font-size: 50px;
   text-align: center;
   position: relative;
-  margin-top: 100px;
+  margin: 100px 0;
   color: #6b7dff;
   overflow-wrap: break-word;
   animation: ${(props) =>
