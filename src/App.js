@@ -35,7 +35,7 @@ function App() {
       const response = await axios.get('http://localhost:3003/todos');
       const todos = response.data;
       setToDoList(todos);
-      console.log(todos);
+      // console.log(todos);
     }
     fetchData();
   },[])

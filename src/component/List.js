@@ -142,7 +142,7 @@ export default function List({ toDoList, setToDoList }) {
 
   const handleCheck = (e, itemId) => {
     const isChecked = e.target.checked;
-    console.log(isChecked)
+    // console.log(isChecked)
   
     axios
       .patch(`http://localhost:3003/todos/${itemId}`, { isDone: isChecked })
@@ -175,7 +175,7 @@ export default function List({ toDoList, setToDoList }) {
   const openModal = (itemId) => {
     setShowModal(true);
     setModalItemId(itemId);
-    console.log(itemId);
+    // console.log(itemId);
   };
 
   const closeModal = (value) => {
