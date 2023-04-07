@@ -1,3 +1,11 @@
+# 스크린샷 및 동작 영상
+![image](https://user-images.githubusercontent.com/119473025/230548184-7d79c16a-574f-4262-b778-3649822ba27d.png)
+
+
+https://user-images.githubusercontent.com/119473025/230548389-864e7409-3b9c-44f6-94a7-01f36c815b9a.mp4
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
