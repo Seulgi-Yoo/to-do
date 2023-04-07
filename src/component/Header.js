@@ -60,7 +60,7 @@ const WeatherIcon = styled.div`
 const TodayButton = styled.button`
   position: absolute;
   left: 20px;
-`
+`;
 
 function formatWeekday(date) {
   const options = { weekday: "long" };
@@ -113,8 +113,8 @@ export default function Header({ selectedDate, setSelectedDate }) {
   };
 
   const handleToDay = () => {
-    setSelectedDate(new Date().toLocaleDateString())
-  }
+    setSelectedDate(new Date().toLocaleDateString());
+  };
 
   return (
     <DateContainer>
@@ -126,9 +126,11 @@ export default function Header({ selectedDate, setSelectedDate }) {
         <DayWeek>{formatWeekday(date)}, </DayWeek>
         <MonthDate>{formatMonthDay(date)}</MonthDate>
       </div>
-      <WeatherIcon>
-        <span>{getWeatherIcon(weather)}</span>
-      </WeatherIcon>
+      {selectedDate === new Date().toLocaleDateString() && (
+        <WeatherIcon>
+          <span>{getWeatherIcon(weather)}</span>
+        </WeatherIcon>
+      )}
       <DateChangeButton onClick={handleNextDay}>
         <FontAwesomeIcon icon={faAngleRight} />
       </DateChangeButton>
