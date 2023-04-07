@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
 const Container = styled.div`
@@ -34,6 +34,22 @@ const AddTaskContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  button {
+    border: none;
+    background-color: #fff;
+    color: #C1C7FF;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 30px;
+    position: absolute;
+    top: -20px;
+    cursor: pointer;
+    &:hover {
+      color: #6b7dff;
+    }
+  }
 `;
 
 const AddTaskInput = styled.input`
@@ -95,6 +111,9 @@ useEffect(() => {
     setNewTask(e.target.value);
   };
 
+  const handleCloseButton = () => {
+    setIsAddingTask(false);
+  }
 
   const handleAddTaskSubmit = () => {
     if (newTask !== "") {
@@ -115,6 +134,7 @@ useEffect(() => {
   };
 
   const handleKeyPress = (event) => {
+    console.log(event.key)
     if (event.key === "Enter") {
       handleAddTaskSubmit();
     }
@@ -124,6 +144,9 @@ useEffect(() => {
     <Container>
       {isAddingTask ? (
         <AddTaskContainer>
+          <button onClick={handleCloseButton}>
+            <FontAwesomeIcon icon={faCircleXmark} />
+          </button>
           <AddTaskInput
             placeholder="Write a To Do & Press Enter"
             type="text"
