@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
@@ -86,23 +87,6 @@ export default function Controller({ toDoList, setToDoList }) {
     }
   }, [isAddingTask])
 
-  useEffect(() => {
-    const storedToDoList = JSON.parse(localStorage.getItem("toDoList"));
-  if (storedToDoList) {  
-    setToDoList(storedToDoList);
-  }
-}, []);
-
-useEffect(() => {
-  const currentDate = new Date().toLocaleDateString();
-  const storedDate = localStorage.getItem("date");
-  if (currentDate !== storedDate) {
-    localStorage.setItem("date", currentDate);
-    setToDoList([]);
-    localStorage.removeItem('toDoList')
-  }
-}, [toDoList]);
-
   const handleAddTaskClick = () => {
     setIsAddingTask(true);
   };
@@ -117,24 +101,24 @@ useEffect(() => {
 
   const handleAddTaskSubmit = () => {
     if (newTask !== "") {
-      const newId =
-        toDoList.length > 0 ? toDoList[toDoList.length - 1].id + 1 : 1;
       const createDate = new Date().toLocaleTimeString('en-US', {hour12:false}).slice(0, -3)
       const newToDo = {
-        id: newId,
         todo: newTask,
+        isDone: false,
         createDate
       };
-      setToDoList([...toDoList, newToDo]);
-      setNewTask("");
-      setIsAddingTask(false);
-
-      localStorage.setItem("toDoList", JSON.stringify([...toDoList, newToDo]));
+      axios
+      .post("http://localhost:3003/todos", newToDo)
+      .then((response) => {
+        const updatedList = [...toDoList, response.data];
+        setToDoList(updatedList);
+        setNewTask("");
+        setIsAddingTask(false);
+      })
     }
   };
 
   const handleKeyPress = (event) => {
-    console.log(event.key)
     if (event.key === "Enter") {
       handleAddTaskSubmit();
     }
