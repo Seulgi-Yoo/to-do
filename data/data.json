@@ -20,20 +20,6 @@
       "createTime": "10:10",
       "createDate": "2023. 4. 7.",
       "isDone": true
-    },
-    {
-      "todo": "adsfasdf",
-      "isDone": false,
-      "createTime": "13:18",
-      "createDate": "2023. 4. 7.",
-      "id": 4
-    },
-    {
-      "todo": "날짜 테스트",
-      "isDone": false,
-      "createTime": "13:18",
-      "createDate": "2023. 4. 6.",
-      "id": 4
     }
   ]
 }
