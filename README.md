@@ -1,10 +1,18 @@
 # 스크린샷 및 동작 영상
+
 ![image](https://user-images.githubusercontent.com/119473025/230548184-7d79c16a-574f-4262-b778-3649822ba27d.png)
 
 
-https://user-images.githubusercontent.com/119473025/230548389-864e7409-3b9c-44f6-94a7-01f36c815b9a.mp4
+https://user-images.githubusercontent.com/119473025/230548977-1ecf3930-48ea-4c48-99c9-3a5c7c349f3c.mp4
 
+# 기능 설명
 
+1. 새로운 할 일 추가
+2. 할 일 삭제
+3. 할 일 완료 상태 변경
+4. 할 일 내용(텍스트) 수정
+5. 날짜 이동
+6. 오늘 날씨 받아서 아이콘으로 표시
 
 # Getting Started with Create React App
 
