@@ -1,9 +1,11 @@
 import "./App.css";
+import axios from "axios";
 import styled from "styled-components";
 import Header from "./component/Header";
 import List from "./component/List";
 import Controller from "./component/Controller";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Main = styled.main`
   display: flex;
@@ -24,8 +26,19 @@ const Container = styled.div`
     width: 100vw;
   }
 `;
+
 function App() {
   const [toDoList, setToDoList] = useState([]); // 투두 리스트
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('http://localhost:3003/todos');
+      const todos = response.data;
+      setToDoList(todos);
+      console.log(todos);
+    }
+    fetchData();
+  },[])
 
   return (
     <Main>
