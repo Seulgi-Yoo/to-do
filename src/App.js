@@ -32,7 +32,8 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get('http://localhost:3003/todos');
+      const today = new Date().toLocaleDateString();
+      const response = await axios.get(`http://localhost:3003/todos?createDate=${today}`);
       const todos = response.data;
       setToDoList(todos);
       // console.log(todos);
