@@ -29,22 +29,21 @@ const Container = styled.div`
 
 function App() {
   const [toDoList, setToDoList] = useState([]); // 투두 리스트
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString()) // 선택한 날짜(기본 값: 오늘)
 
   useEffect(() => {
     async function fetchData() {
-      const today = new Date().toLocaleDateString();
-      const response = await axios.get(`http://localhost:3003/todos?createDate=${today}`);
+      const response = await axios.get(`http://localhost:3003/todos?createDate=${selectedDate}`);
       const todos = response.data;
       setToDoList(todos);
-      // console.log(todos);
     }
     fetchData();
-  },[])
+  },[selectedDate])
 
   return (
     <Main>
       <Container>
-        <Header />
+        <Header setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
         <List toDoList={toDoList} setToDoList={setToDoList} />
         <Controller toDoList={toDoList} setToDoList={setToDoList} />
       </Container>
