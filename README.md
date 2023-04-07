@@ -1,7 +1,3 @@
-# 로컬 접속 링크(ngrok)
-
-https://07c3-219-241-3-135.jp.ngrok.io
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
