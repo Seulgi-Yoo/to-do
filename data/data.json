@@ -4,22 +4,36 @@
       "id": 1,
       "todo": "ADD NEW 버튼으로 할 일을 추가할 수 있어요",
       "createTime": "10:10",
-      "createDate": "2023-04-07",
+      "createDate": "2023. 4. 7.",
       "isDone": false
     },
     {
       "id": 2,
       "todo": "텍스트를 클릭하면 내용을 수정할 수 있어요",
       "createTime": "10:10",
-      "createDate": "2023-04-07",
+      "createDate": "2023. 4. 7.",
       "isDone": false
     },
     {
       "id": 3,
       "todo": "할 일을 끝냈다면 체크박스를 클릭하세요",
       "createTime": "10:10",
-      "createDate": "2023-04-07",
+      "createDate": "2023. 4. 7.",
       "isDone": true
+    },
+    {
+      "todo": "adsfasdf",
+      "isDone": false,
+      "createTime": "13:18",
+      "createDate": "2023. 4. 7.",
+      "id": 4
+    },
+    {
+      "todo": "날짜 테스트",
+      "isDone": false,
+      "createTime": "13:18",
+      "createDate": "2023. 4. 6.",
+      "id": 4
     }
   ]
 }

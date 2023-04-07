@@ -245,7 +245,7 @@ export default function List({ toDoList, setToDoList }) {
                 {item.todo}
               </span>
               <div>
-                <span className="date">{item.createDate}</span>
+                <span className="date">{item.createTime}</span>
                 <div className="delete" onClick={() => handleDelete(item.id)}>
                   <FontAwesomeIcon icon={faTrashCan} />
                 </div>

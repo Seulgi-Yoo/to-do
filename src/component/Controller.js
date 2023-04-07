@@ -101,10 +101,12 @@ export default function Controller({ toDoList, setToDoList }) {
 
   const handleAddTaskSubmit = () => {
     if (newTask !== "") {
-      const createDate = new Date().toLocaleTimeString('en-US', {hour12:false}).slice(0, -3)
+      const createTime = new Date().toLocaleTimeString('en-US', {hour12:false}).slice(0, -3);
+      const createDate = new Date().toLocaleDateString();
       const newToDo = {
         todo: newTask,
         isDone: false,
+        createTime,
         createDate
       };
       axios
