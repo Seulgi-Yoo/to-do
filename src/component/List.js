@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -88,6 +89,7 @@ const ListItem = styled.li`
     margin: 0 23px;
     font-size: 18px;
     color: #6b7dff;
+    max-width: 320px;
     &.checked {
       text-decoration: line-through;
       color: #c1c7ff;
@@ -134,24 +136,40 @@ const ListItem = styled.li`
 `;
 
 export default function List({ toDoList, setToDoList }) {
-  const [checkedItems, setCheckedItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalItemId, setModalItemId] = useState(null);
   const inputRef = useRef(null);
 
   const handleCheck = (e, itemId) => {
     const isChecked = e.target.checked;
-    if (isChecked) {
-      setCheckedItems([...checkedItems, itemId]);
-    } else {
-      setCheckedItems(checkedItems.filter((id) => id !== itemId));
-    }
+    console.log(isChecked)
+  
+    axios
+      .patch(`http://localhost:3003/todos/${itemId}`, { isDone: isChecked })
+      .then((response) => {
+        const updatedItem = response.data;
+        setToDoList(prevList => prevList.map(item => {
+          if (item.id === updatedItem.id) {
+            return updatedItem;
+          }
+          return item;
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleDelete = (itemId) => {
-    const updatedList = toDoList.filter((item) => item.id !== itemId);
-    setToDoList(updatedList);
-    localStorage.setItem("toDoList", JSON.stringify(updatedList));
+    axios
+    .delete(`http://localhost:3003/todos/${itemId}`)
+    .then((response) => {
+      const updatedList = toDoList.filter((item) => item.id !== itemId);
+      setToDoList(updatedList);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   };
 
   const openModal = (itemId) => {
@@ -162,12 +180,22 @@ export default function List({ toDoList, setToDoList }) {
 
   const closeModal = (value) => {
     setShowModal(false);
-    const findIdx = toDoList.findIndex((item) => item.id === modalItemId);
+    // const findIdx = toDoList.findIndex((item) => item.id === modalItemId);
     if (value !== '') {
-      toDoList[findIdx].todo = value;
-      const updatedList = [...toDoList];
-      setToDoList(updatedList);
-      localStorage.setItem("toDoList", JSON.stringify(updatedList));
+      axios
+      .patch(`http://localhost:3003/todos/${modalItemId}`, {todo: value})
+      .then((response) => {
+        const updatedItem = response.data;
+        setToDoList(prevList => prevList.map(item => {
+          if (item.id === updatedItem.id) {
+            return updatedItem;
+          }
+          return item;
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
   };
 
@@ -206,12 +234,13 @@ export default function List({ toDoList, setToDoList }) {
             <ListItem key={item.id}>
               <input
                 type="checkbox"
-                checked={checkedItems.includes(item.id)}
+                checked={item.isDone}
+                
                 onChange={(e) => handleCheck(e, item.id)}
               />
               <span
                 onClick={() => openModal(item.id)}
-                className={checkedItems.includes(item.id) ? "checked" : ""}
+                className={item.isDone ? "checked" : ""}
               >
                 {item.todo}
               </span>
